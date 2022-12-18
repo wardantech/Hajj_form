@@ -19,7 +19,7 @@ use App\Http\Controllers\PermissionController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/ 
+*/
 Route::get('/', function () { return view('home'); });
 
 
@@ -27,8 +27,8 @@ Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class,'login']);
 Route::post('register', [RegisterController::class,'register']);
 
-Route::get('password/forget',  function () { 
-	return view('pages.forgot-password'); 
+Route::get('password/forget',  function () {
+	return view('pages.forgot-password');
 })->name('password.forget');
 Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
@@ -40,9 +40,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/logout', [LoginController::class,'logout']);
 	Route::get('/clear-cache', [HomeController::class,'clearCache']);
 
-	// dashboard route  
-	Route::get('/dashboard', function () { 
-		return view('pages.dashboard'); 
+	// dashboard route
+	Route::get('/dashboard', function () {
+		return view('pages.dashboard');
 	})->name('dashboard');
 
 	//only those have manage_user permission will get access
@@ -82,13 +82,13 @@ Route::group(['middleware' => 'auth'], function(){
 
 	// permission examples
     Route::get('/permission-example', function () {
-    	return view('permission-example'); 
+    	return view('permission-example');
     });
     // API Documentation
     Route::get('/rest-api', function () { return view('api'); });
     // Editable Datatable
-	Route::get('/table-datatable-edit', function () { 
-		return view('pages.datatable-editable'); 
+	Route::get('/table-datatable-edit', function () {
+		return view('pages.datatable-editable');
 	});
 
     // Themekit demo pages
@@ -139,15 +139,15 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/inventory', function () { return view('inventory.dashboard'); });
 	Route::get('/pos', function () { return view('inventory.pos'); });
 	Route::get('/products', function () { return view('inventory.product.list'); });
-	Route::get('/products/create', function () { return view('inventory.product.create'); }); 
-	Route::get('/categories', function () { return view('inventory.category.index'); }); 
+	Route::get('/products/create', function () { return view('inventory.product.create'); });
+	Route::get('/categories', function () { return view('inventory.category.index'); });
 	Route::get('/sales', function () { return view('inventory.sale.list'); });
-	Route::get('/sales/create', function () { return view('inventory.sale.create'); }); 
+	Route::get('/sales/create', function () { return view('inventory.sale.create'); });
 	Route::get('/purchases', function () { return view('inventory.purchase.list'); });
-	Route::get('/purchases/create', function () { return view('inventory.purchase.create'); }); 
-	Route::get('/customers', function () { return view('inventory.people.customers'); }); 
-	Route::get('/suppliers', function () { return view('inventory.people.suppliers'); }); 
-	
+	Route::get('/purchases/create', function () { return view('inventory.purchase.create'); });
+	Route::get('/customers', function () { return view('inventory.people.customers'); });
+	Route::get('/suppliers', function () { return view('inventory.people.suppliers'); });
+
 });
 
 
