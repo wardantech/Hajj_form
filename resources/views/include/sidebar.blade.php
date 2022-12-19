@@ -59,6 +59,13 @@
                         <a href="{{url('permission')}}" class="menu-item {{ ($segment1 == 'permission') ? 'active' : '' }}">{{ __('Permission')}}</a>
                     </div>
                 </div>
+                <div class="nav-item {{ ($segment1 == 'users' || $segment1 == 'roles'||$segment1 == 'permission' ||$segment1 == 'user') ? 'active open' : '' }} has-sub">
+                    <a href="#"><i class="ik ik-user"></i><span>{{ __('User Info')}}</span></a>
+                    <div class="submenu-content">
+                        <a href="{{url('users')}}" class="menu-item {{ ($segment1 == 'users') ? 'active' : '' }}">{{ __('Users List')}}</a>
+                        <a href="{{url('user/create')}}" class="menu-item {{ ($segment1 == 'user' && $segment2 == 'create') ? 'active' : '' }}">{{ __('Add User')}}</a>
+                    </div>
+                </div>
                 <div class="nav-item {{ ($segment1 == 'table-datatable-edit') ? 'active' : '' }}">
                     <a href="{{url('table-datatable-edit')}}"><i class="ik ik-layout"></i><span>{{ __('Editable Datatable')}}</span>  </a>
 
