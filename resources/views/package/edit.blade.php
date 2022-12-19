@@ -1,53 +1,79 @@
 @extends('layouts.main')
-@section('title', 'Package Edit')
+@section('title', 'Edit Package')
 @section('content')
     <!-- push external head elements to head -->
     @push('head')
         <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     @endpush
 
-@section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <p class="m-0">Edit</p>
-                        <a href="{{route('package.index')}}">Back</a>
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <i class="ik ik-user-plus bg-blue"></i>
+                        <div class="d-inline">
+                            <h5>{{ __('Edit Package')}}</h5>
+                        </div>
                     </div>
-
+                </div>
+                <div class="col-lg-4">
+                    <nav class="breadcrumb-container" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{url('dashboard')}}"><i class="ik ik-home"></i></a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{route('package.index')}}">{{ __('Back')}}</a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- start message area-->
+        @include('include.message')
+        <!-- end message area-->
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3>{{ __('Edit Package')}}</h3>
+                    </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('package.update',$package->id) }}">
+                        <form class="forms-sample" method="POST" action="{{ route('package.update', $package->id) }}" >
                             @csrf
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Package Name') }}</label>
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $package->name }}" required autocomplete="name" autofocus>
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name">{{ __('Name')}}<span class="text-red">*</span></label>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $package->name }}" required>
+                                        <div class="help-block with-errors"></div>
 
-                            <div class="form-group row">
-                                <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}</label>
-                                <div class="col-md-6">
-                                    <input id="amount" type="amount" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ $package->amount }}" required autocomplete="amount">
-                                    @error('amount')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                        @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="amount">{{ __('Amount')}}<span class="text-red">*</span></label>
+                                        <input id="amount" type="amount" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ $package->amount }}" required>
+                                        <div class="help-block with-errors" ></div>
 
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Update') }}
-                                    </button>
+                                        @error('amount')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">{{ __('Update')}}</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -56,9 +82,16 @@
             </div>
         </div>
     </div>
+    <!-- push external js -->
     @push('script')
         <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
         <!--get role wise permissiom ajax script-->
         <script src="{{ asset('js/get-role.js') }}"></script>
     @endpush
 @endsection
+
+
+
+
+
+
