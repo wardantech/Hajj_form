@@ -69,7 +69,7 @@ class UserController extends Controller
                         return '';
                     }
                 })
-                ->rawColumns(['roles','permissions','action'])
+                ->rawColumns(['action'])
                 ->make(true);
     }
 

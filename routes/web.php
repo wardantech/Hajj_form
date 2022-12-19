@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\package\PackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,13 @@ Route::get('/', function () { return view('home'); });
 Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class,'login']);
 Route::post('register', [RegisterController::class,'register']);
+
+Route::get('package/index',[PackageController::class,'index'])->name('package.index');
+Route::get('package/create',[PackageController::class,'create'])->name('package.create');
+Route::post('package/store',[PackageController::class,'store'])->name('package.store');
+Route::get('package/edit/{id}',[PackageController::class,'edit'])->name('package.edit');
+Route::post('package/update/{id}',[PackageController::class,'update'])->name('package.update');
+Route::get('package/delete/{id}',[PackageController::class,'destroy'])->name('package.destroy');
 
 Route::get('password/forget',  function () {
 	return view('pages.forgot-password');

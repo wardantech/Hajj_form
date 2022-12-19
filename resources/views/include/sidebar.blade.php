@@ -61,8 +61,11 @@
                 </div>
                 <div class="nav-item {{ ($segment1 == 'table-datatable-edit') ? 'active' : '' }}">
                     <a href="{{url('table-datatable-edit')}}"><i class="ik ik-layout"></i><span>{{ __('Editable Datatable')}}</span>  </a>
-
                 </div>
+                <div class="nav-item {{ ($segment1 == 'table-datatable-edit') ? 'active' : '' }}">
+                    <a href="{{route('package.index')}}"><i class="ik ik-layout"></i><span>{{ __('Package')}}</span>  </a>
+                </div>
+            </nav>
         </div>
     </div>
 </div>
