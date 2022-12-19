@@ -55,6 +55,7 @@
                         <table id="table" class="table">
                             <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Passport</th>
                                 <th>Phone Number</th>
@@ -66,6 +67,7 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td><img src="{{ asset('/upload/client/'.$client->image) }}" alt="" width="50" height="50"></td>
                                     <td>{{ $client->name }}</td>
                                     <td>{{ $client->passport }}</td>
                                     <td>{{ $client->phone }}</td>
