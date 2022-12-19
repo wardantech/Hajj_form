@@ -62,60 +62,45 @@
         <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
         <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
         <!--server side users table script-->
-        <script src="{{ asset('js/custom.js') }}"></script>
+        <script>
+            $(document).ready( function () {
+                var searchable = [];
+                var selectable = [];
+
+                $.ajaxSetup({
+                    headers:{
+                        "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content"),
+                    }
+                });
+
+                var dTable = $('#user_table').DataTable({
+                    order: [],
+                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    processing: true,
+                    responsive: false,
+                    serverSide: true,
+                    language: {
+                        processing: '<i class="ace-icon fa fa-spinner fa-spin orange bigger-500" style="font-size:60px;margin-top:50px;"></i>'
+                    },
+                    scroller: {
+                        loadingIndicator: false
+                    },
+                    pagingType: "full_numbers",
+                    // dom: "<'row'<'col-sm-2'l><'col-sm-7 text-center'B><'col-sm-3'f>>tipr",
+                    ajax: {
+                        url: "{{route('package.index')}}",
+                        type: "get"
+                    },
+                    columns: [
+                        // {data:'serial_no', name: 'serial_no'},
+                        {data:'name', name: 'name', orderable: true},
+                        {data:'amount', name: 'amount', orderable: true},
+                        {data:'action', name: 'action',  orderable: false, searchable: false}
+
+                    ],
+                });
+            });
+        </script>
+
     @endpush
 @endsection
-
-
-
-{{--@extends('layouts.main')--}}
-{{--@section('title', 'Packages')--}}
-{{--@section('content')--}}
-    {{--<!-- push external head elements to head -->--}}
-    {{--@push('head')--}}
-        {{--<link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">--}}
-    {{--@endpush--}}
-
-{{--@section('content')--}}
-    {{--<div class="container">--}}
-        {{--<div class="row justify-content-center">--}}
-            {{--<div class="col-md-8">--}}
-                {{--<div class="card">--}}
-                    {{--<div class="card-header d-flex justify-content-between align-items-center">--}}
-                        {{--<p class="m-0">Package List</p>--}}
-                        {{--<a href="{{route('package.create')}}">Create Package</a>--}}
-                    {{--</div>--}}
-                    {{--<div class="card-body">--}}
-                        {{--<table class="table table-bordered" id="table">--}}
-                            {{--<thead style="text-align: center">--}}
-                                {{--<tr>--}}
-                                    {{--<th><b>Name</b></th>--}}
-                                    {{--<th><b>Amount</b></th>--}}
-                                    {{--<th><b>Action</b></th>--}}
-                                  {{--</tr>--}}
-                            {{--</thead>--}}
-                            {{--<tbody style="text-align: center">--}}
-                                {{--@foreach($packages as $package)--}}
-                                    {{--<tr>--}}
-                                        {{--<th>{{$package->name}}</th>--}}
-                                        {{--<th>{{$package->amount}}</th>--}}
-                                        {{--<th>--}}
-                                            {{--<a href="{{route('package.edit', $package->id)}}" title="edit" class="btn btn-sm btn-warning"><i class='bx bxs-edit-alt'></i></a>--}}
-                                            {{--<a href="{{route('package.destroy', $package->id)}}" title="edit" class="btn btn-sm btn-warning"><i class='bx bxs-edit-alt'></i></a>--}}
-                                        {{--</th>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
-                            {{--</tbody>--}}
-                        {{--</table>--}}
-                    {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-    {{--@push('script')--}}
-        {{--<script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>--}}
-        {{--<!--get role wise permissiom ajax script-->--}}
-        {{--<script src="{{ asset('js/get-role.js') }}"></script>--}}
-    {{--@endpush--}}
-{{--@endsection--}}

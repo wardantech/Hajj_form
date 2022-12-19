@@ -5,28 +5,37 @@ namespace App\Http\Controllers\package;
 use App\Http\Controllers\Controller;
 use App\Models\Package;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Contracts\DataTable;
+use Yajra\DataTables\DataTables;
 
 class PackageController extends Controller
 {
     public function index()
     {
-        return view('package.index');
+        try {
+            $data = Package::all();
+            if (request()->ajax()) {
+                return DataTables::of($data)
+                    ->addColumn('action', function ($data){
+
+
+                        $edit_btn= '<span class="table-actions">
+                                                <a href="'.route('package.edit', $data->id).'" title="Edit"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
+                                            </span>';
+
+                        $del_btn= '<span class="table-actions">
+                                                <a href="'.route('package.destroy', $data->id).'" title="Delete"><i class="ik ik-trash-2 f-16 text-red"></i></a>
+                                            </span>';
+                        return $edit_btn.' '.$del_btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+            return view('package.index');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
 
-    public function getPackageList(Request $request)
-    {
-        $data = Package::get();
-        return DataTable::of($data)
-            ->addColumn('action', function($data){
-                return '<div class="table-actions">
-                                <a href="'.url('package/edit/'.$data->id).'" ><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                <a href="'.url('package/delete/'.$data->id).'"><i class="ik ik-trash-2 f-16 text-red"></i></a>
-                            </div>';
-            })
-        ->rawColumns('action')
-        ->make(true);
-    }
 
     public function create()
     {
@@ -57,6 +66,7 @@ class PackageController extends Controller
 
     public function edit($id)
     {
+
         $package = Package::findOrFail($id);
         return view('package.edit',compact('package'));
     }

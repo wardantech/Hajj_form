@@ -264,8 +264,6 @@
                     }, // success end
                 })
             }
-
-
         </script>
         <script>
             $(() => {
