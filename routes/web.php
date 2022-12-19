@@ -1,15 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PermissionController;
+
 use App\Http\Controllers\package\PackageController;
+
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Client\ClientController;
+use App\Http\Controllers\Client\ClientAuthController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +26,8 @@ use App\Http\Controllers\package\PackageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () { return view('home'); });
+// Route::get('/', function () { return view('home'); });
+Route::get('/', function () { return view('client_dashboard.login'); });
 
 
 Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
@@ -161,3 +167,11 @@ Route::group(['middleware' => 'auth'], function(){
 
 Route::get('/register', function () { return view('pages.register'); });
 Route::get('/login-1', function () { return view('pages.login'); });
+
+// Route::group(['prefix' => 'client', 'as' => 'client.'], function(){
+//     Route::resource('/', ClientController::class);
+// });
+
+    Route::resource('client', ClientController::class);
+    Route::get('client/server-data', [ClientController::class, 'clientsServerData'])->name('client.clients-server-data');
+    Route::post('client/login', [ClientAuthController::class, 'login'])->name('client.login');
