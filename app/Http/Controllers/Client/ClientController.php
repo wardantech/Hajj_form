@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Models\Client\Client;
+use App\Models\Package;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class ClientController extends Controller
 {
@@ -14,13 +16,62 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            // try {
-                $clients = Client::all();
+            if($request->has('phone')){
+                $clients= Client::where('phone', 'like', "%{$request->phone}%")->get();
 
-                if (request()->ajax()) {
+                // dd($clients);
+            }else{
+                $clients = Client::all();
+            }
+            // dd($clients);
+
+            if (request()->ajax()) {
+                return DataTables::of($clients)
+                    ->addColumn('action', function ($clients){
+                        $show_btn= '';
+                        $edit_btn= '';
+                        $del_btn= '';
+
+                            $show_btn= '<span class="table-actions">
+                                            <a href="' . route('client.show', $clients->id) . '" title="Show" ><i class="ik ik-maximize-2 f-16 mr-15 text-green"></i></a>
+                                        </span>';
+
+                            $edit_btn= '<span class="table-actions">
+                                            <a href="'.route('client.edit', $clients->id).'" title="Edit"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
+                                        </span>';
+
+                            $del_btn= '<span class="table-actions">
+                                            <a style="cursor:pointer" type="submit" onclick="showDeleteConfirm(' . $clients->id . ')" title="Delete"><i class="ik ik-trash-2 f-16 text-red"></i></a>
+                                        </span>';
+
+
+                        return $show_btn.' '.$edit_btn.' '.$del_btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+            return view('client.index');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+    }
+
+    public function clientsServerData(Request $request){
+        try {
+
+                if($request->has('phone')){
+                    $clients= Client::where('phone', 'like', "%{$request->phone}%")->get();
+
+                    // dd($clients);
+                }else{
+                    $clients = Client::all();
+                }
+                dd($clients);
+
+                // if (request()->ajax()) {
                     return DataTables::of($clients)
                         ->addColumn('action', function ($clients){
                             $show_btn= '';
@@ -44,18 +95,12 @@ class ClientController extends Controller
                         })
                         ->rawColumns(['action'])
                         ->make(true);
-                }
-            // } catch (\Exception $exception) {
-            //     return redirect()->back()->with('error', $exception->getMessage());
-            // }
-            return view('client.index');
+                // }
+                // return view('client.index');
+
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
-    }
-
-    public function clientsServerData(){
-
     }
 
     /**
@@ -66,7 +111,8 @@ class ClientController extends Controller
     public function create()
     {
         try {
-            return view('client.create');
+            $packages = Package::all();
+            return view('client.create', compact('packages'));
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
@@ -113,7 +159,7 @@ class ClientController extends Controller
             $data->due          = 0;//$request->due;
             $data->save();
 
-            return redirect(route('client.client-user.index'))->with('success', 'Created successfully');
+            return redirect(route('client.index'))->with('success', 'Created successfully');
         // } catch (\Exception $exception) {
         //     return redirect()->back()->with('error', $exception->getMessage());
         // }
@@ -127,7 +173,12 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-
+        try {
+            $client = Client::with('packages')->find($id);
+            return view('client.show', compact('client'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
 
     /**
@@ -167,5 +218,21 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request){
+        $clients= Client::where('phone', 'like', "%{$request->phone}%")->get();
+
+        dd($clients);
+    }
+
+    public function PackageAmount(Request $request)
+    {
+        try{
+            $amount = Package::where('id', $request->package_id)->get();
+            return response()->json($amount);
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
 }

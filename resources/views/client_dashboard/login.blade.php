@@ -57,25 +57,10 @@
                                 @enderror
                                 </div>
                                 <div class="row">
-                                    <div class="col text-left">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="item_checkbox" name="item_checkbox" value="option1">
-                                            <span class="custom-control-label">&nbsp;Remember Me</span>
-                                        </label>
-                                    </div>
-                                    <div class="col text-right">
-                                        <a class="btn text-danger" href="{{url('password/forget')}}">
-                                            {{ __('Forgot Password?') }}
-                                        </a>
-                                    </div>
                                 </div>
                                 <div class="sign-btn text-center">
                                     <button class="btn btn-custom">Sign In</button>
                                 </div>
-                                <div class="register">
-                                    <p>{{ __('No account?')}} <a href="{{url('register')}}">{{ __('Sign Up')}}</a></p>
-                                </div>
-
                             </form>
                         </div>
                     </div>

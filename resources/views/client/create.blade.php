@@ -91,10 +91,11 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="package_id">Package</label>
-                                        <select name="package_id" id="" class="form-control">
+                                        <select name="package_id" id="package_id" class="form-control">
                                             <option value="">Select Package</option>
-                                            <option value="1">Hajj</option>
-                                            <option value="2">Umrah</option>
+                                            @foreach ($packages as $key => $package)
+                                            <option value="{{ $package->id }}">{{ $package->name }}</option>
+                                            @endforeach
                                         </select>
                                         @error('package_id')
                                         <span class="text-red-error text-danger" role="alert">
@@ -106,7 +107,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="bill">Bill</label>
-                                        <input type="text" name="bill" id="bill" class="form-control @error('bill') is-invalid @enderror" placeholder="Bill Amount" value="{{ old('bill') }}">
+                                        <input type="text" name="bill" id="bill" class="form-control @error('bill') is-invalid @enderror" placeholder="Bill Amount" value="{{ old('bill') }}" readonly>
                                         @error('bill')
                                         <span class="text-red-error text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -138,4 +139,25 @@
         </div>
         {{-- @endcan --}}
     </div>
+
+@push('script')
+<script>
+    $('#package_id').on('change', function() {
+           var package_id= $('#package_id').val();
+           $.ajax({
+               url: "{{ route('package-amount') }}",
+               type: "GET",
+               data: {
+                   'package_id':package_id,
+               },
+               success: function(data){
+                   $('#bill').val(null);
+                   $.each(data, function(key, value){
+                       $('#bill').val(value.amount);
+                   });
+               },
+           });
+       });
+</script>
+@endpush
 @endsection

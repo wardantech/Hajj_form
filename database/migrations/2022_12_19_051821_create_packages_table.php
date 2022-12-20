@@ -18,6 +18,7 @@ class CreatePackagesTable extends Migration
             $table->string('name')->unique();
             $table->integer('amount');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
