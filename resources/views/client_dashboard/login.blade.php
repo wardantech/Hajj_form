@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Login | Laravel Admin Starter Kit - Radmin</title>
+        <title>Check Info | UNION TOURISM SERVICE</title>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,33 +33,36 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 m-auto">
                         <div class="authentication-form mx-auto">
                             <div class="logo-centered">
-                                <a href="http://radmin.rakibhstu.com"><img height="40" src="{{ asset('img/logo.png') }}" alt="RADMIN" ></a>
+                                <h5>UNION TOURISM SERVICE</h5>
                             </div>
                             <p>Welcome back! </p>
+                            @if(Session::get('message'))
+                                <div class="alert alert-danger">{{ Session::get('message') }}</div>
+                            @endif
                             <form method="POST" action="{{ route('client.login') }}">
                             @csrf
                                 <div class="form-group">
-                                    <input id="username" type="username" placeholder="username" class="form-control @error('username') is-invalid @enderror" name="username" required autocomplete="username" autofocus>
+                                    <input id="phone" type="phone" placeholder="Phone" class="form-control @error('phone') is-invalid @enderror" name="phone" required autocomplete="phone" autofocus>
                                     <i class="ik ik-user"></i>
-                                    @error('username')
+                                    @error('phone')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <input id="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" name="password"  value="1234" required>
+                                    <input id="passport" type="passport" placeholder="Passport" class="form-control @error('passport') is-invalid @enderror" name="passport" required autocomplete="passport" autofocus>
                                     <i class="ik ik-lock"></i>
-                                    @error('password')
+                                    @error('passport')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
+                                    @enderror
                                 </div>
                                 <div class="row">
                                 </div>
                                 <div class="sign-btn text-center">
-                                    <button class="btn btn-custom">Sign In</button>
+                                    <button class="btn btn-custom">Check Info</button>
                                 </div>
                             </form>
                         </div>

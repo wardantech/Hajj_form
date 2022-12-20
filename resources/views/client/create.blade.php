@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Client')
+@section('title', 'User')
 @section('content')
     <div class="container-fluid">
         <div class="page-header">
@@ -8,7 +8,7 @@
                     <div class="page-header-title">
                         <i class="ik ik-headphones bg-danger"></i>
                          <div class="d-inline">
-                            <h5>Add Client</h5>
+                            <h5>Add User</h5>
                             {{--<span>CREATE A NEW Area</span>--}}
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                        <label for="name">Client Name<span class="text-red">*</span></label>
+                                        <label for="name">Name<span class="text-red">*</span></label>
                                         <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Client Name" value="{{ old('name') }}" required>
                                         @error('name')
                                         <span class="text-red-error text-danger" role="alert">
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                        <label for="phone">Client Phone<span class="text-red">*</span></label>
+                                        <label for="phone">Phone<span class="text-red">*</span></label>
                                         <input type="number" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="+880" value="{{ old('phone') }}" required>
                                         @error('phone')
                                         <span class="text-red-error text-danger" role="alert">

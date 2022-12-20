@@ -7,7 +7,6 @@ use App\Models\Client\Client;
 use App\Models\Package;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class ClientController extends Controller
 {
@@ -19,17 +18,20 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         try {
-            if($request->has('phone')){
-                $clients= Client::where('phone', 'like', "%{$request->phone}%")->get();
+            $clients = Client::all();
+            // if($request->has('phone')){
+            //     $clients= Client::where('phone', 'like', "%{$request->phone}%")->get();
 
-                // dd($clients);
-            }else{
-                $clients = Client::all();
-            }
-            // dd($clients);
+            // }else{
+            //     $clients = Client::all();
+            // }
 
             if (request()->ajax()) {
                 return DataTables::of($clients)
+                    ->addColumn('user_image', function ($clients) {
+                        $result = '<img title="Icon" height="80px" width="80px" src="'.asset('upload/client').'/'.$clients->image.'" alt="Image">';
+                        return $result;
+                    })
                     ->addColumn('due', function ($clients){
                         $due= $clients->bill - $clients->paid;
                         return $due;
@@ -54,54 +56,10 @@ class ClientController extends Controller
 
                         return $show_btn.' '.$edit_btn.' '.$del_btn;
                     })
-                    ->rawColumns(['due', 'action'])
+                    ->rawColumns(['user_image', 'due', 'action'])
                     ->make(true);
             }
             return view('client.index');
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', $exception->getMessage());
-        }
-    }
-
-    public function clientsServerData(Request $request){
-        try {
-
-                if($request->has('phone')){
-                    $clients= Client::where('phone', 'like', "%{$request->phone}%")->get();
-
-                    // dd($clients);
-                }else{
-                    $clients = Client::all();
-                }
-                dd($clients);
-
-                // if (request()->ajax()) {
-                    return DataTables::of($clients)
-                        ->addColumn('action', function ($clients){
-                            $show_btn= '';
-                            $edit_btn= '';
-                            $del_btn= '';
-
-                                $show_btn= '<span class="table-actions">
-                                                <a href="' . route('client.show', $clients->id) . '" title="Show" ><i class="ik ik-maximize-2 f-16 mr-15 text-green"></i></a>
-                                            </span>';
-
-                                $edit_btn= '<span class="table-actions">
-                                                <a href="'.route('client.edit', $clients->id).'" title="Edit"><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
-                                            </span>';
-
-                                $del_btn= '<span class="table-actions">
-                                                <a style="cursor:pointer" type="submit" onclick="showDeleteConfirm(' . $clients->id . ')" title="Delete"><i class="ik ik-trash-2 f-16 text-red"></i></a>
-                                            </span>';
-
-
-                            return $show_btn.' '.$edit_btn.' '.$del_btn;
-                        })
-                        ->rawColumns(['action'])
-                        ->make(true);
-                // }
-                // return view('client.index');
-
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
@@ -132,7 +90,6 @@ class ClientController extends Controller
     {
         $request->validate([
             'name'          => 'required|string',
-            'image'         => 'required',
             'passport'      => 'required|string',
             'phone'         => 'required|numeric|min:11||regex:/^([0-9\s\-\+\(\)]*)$/',
             'service_type'  => 'required|numeric',
@@ -185,6 +142,16 @@ class ClientController extends Controller
         }
     }
 
+    public function showForClient($id)
+    {
+        try {
+            $client = Client::with('packages')->find($id);
+            return view('client.show_for_client', compact('client'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -213,7 +180,6 @@ class ClientController extends Controller
     {
         $request->validate([
             'name'          => 'required|string',
-            'image'         => 'required',
             'passport'      => 'required|string',
             'phone'         => 'required|numeric|min:11||regex:/^([0-9\s\-\+\(\)]*)$/',
             'service_type'  => 'required|numeric',

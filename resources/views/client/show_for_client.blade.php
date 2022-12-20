@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('client_dashboard.main')
 @section('title', 'User Deatils')
 
 @section('content')
@@ -11,18 +11,6 @@
                     <div class="d-inline pt-5">
                         <h5 class="pt-10" >User Details</h5>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="page-title-actions float-right">
-                    <a title="Back Button" href="{{ route('client.index') }}" type="button" class="btn btn-sm btn-dark">
-                        <i class="fas fa-arrow-left mr-1"></i>
-                        Back
-                    </a>
-                    <a title="Create Button" href="{{ route('client.create') }}" type="button" class="btn btn-sm btn-success">
-                        <i class="fas fa-plus mr-1"></i>
-                        Create
-                    </a>
                 </div>
             </div>
         </div>

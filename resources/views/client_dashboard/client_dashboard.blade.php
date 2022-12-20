@@ -67,14 +67,14 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><img src="{{ asset('/upload/client/'.$client->image) }}" alt="" width="50" height="50"></td>
+                                    {{-- <td><img src="{{ asset('/upload/client/'.$client->image) }}" alt="" width="50" height="50"></td> --}}
                                     <td>{{ $client->name }}</td>
                                     <td>{{ $client->passport }}</td>
                                     <td>{{ $client->phone }}</td>
                                     <td>{{ $client->bill }}</td>
                                     <td>{{ $client->paid }}</td>
-                                    <td>{{ $client->due }}</td>
-                                    <td>Action</td>
+                                    <td>{{ $client->bill - $client->paid }}</td>
+                                    <td><a href="{{ route('show-for-client', $client->id) }}" class="btn btn-primary">Show</a></td>
                                 </tr>
                             </tbody>
                         </table>

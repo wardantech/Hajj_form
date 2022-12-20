@@ -1,17 +1,17 @@
 <!doctype html>
 <html class="no-js" lang="en">
-    <head> 
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Login | Laravel Admin Starter Kit - Radmin</title>
+        <title>Login | UNION TOURISM SERVICE</title>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon" />
 
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
-        
+
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
         <link rel="stylesheet" href="{{ asset('plugins/ionicons/dist/css/ionicons.min.css') }}">
@@ -33,7 +33,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 m-auto">
                         <div class="authentication-form mx-auto">
                             <div class="logo-centered">
-                                <a href="http://radmin.rakibhstu.com"><img height="40" src="{{ asset('img/logo.png') }}" alt="RADMIN" ></a>
+                                <h5>UNION TOURISM SERVICE</h5>
                             </div>
                             <p>Welcome back! </p>
                             <form method="POST" action="{{ route('login') }}">
@@ -75,19 +75,19 @@
                                 <div class="register">
                                     <p>{{ __('No account?')}} <a href="{{url('register')}}">{{ __('Sign Up')}}</a></p>
                                 </div>
-                                
+
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <script src="{{ asset('src/js/vendor/jquery-3.3.1.min.js') }}"></script>
         <script src="{{ asset('plugins/popper.js/dist/umd/popper.min.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
         <script src="{{ asset('plugins/screenfull/dist/screenfull.js') }}"></script>
-        
+
     </body>
 </html>

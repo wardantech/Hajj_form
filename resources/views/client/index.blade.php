@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Client')
+@section('title', 'User')
 
 @push('head')
 
@@ -23,28 +23,16 @@
                     <div class="page-header-title">
                         <i class="ik ik-edit bg-blue"></i>
                         <div class="d-inline">
-                            <h5>Client List</h5>
+                            <h5>User List</h5>
                             <span>
 
                         </span>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-4">
-                    <nav class="breadcrumb-container" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="http://127.0.0.1:8000/dashboard"><i class="ik ik-home"></i></a>
-                            </li>
-                            <li class="breadcrumb-item"><a href="#">Client Info</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Client</li>
-                        </ol>
-                    </nav>
-                </div>
             </div>
         </div>
-        <div>
+        {{-- <div>
             <form action="{{ route('client.index') }}" method="get" id="search-form">
                 @csrf
                 <div class="row ml-2">
@@ -75,7 +63,7 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> --}}
         <div class="row">
             <!-- start message area-->
             {{-- @include('alert.flash-message') --}}
@@ -87,6 +75,7 @@
                         <table id="table" class="table">
                             <thead>
                             <tr>
+                                <th>Picture</th>
                                 <th>Name</th>
                                 <th>Passport</th>
                                 <th>Phone Number</th>
@@ -157,6 +146,7 @@
                     },
                     columns: [
                         // {data:'serial_no', name: 'serial_no'},
+                        {data:'user_image', name: 'user_image', orderable: true},
                         {data:'name', name: 'name', orderable: true},
                         {data:'passport', name: 'passport', orderable: true},
                         {data:'phone', name: 'phone', orderable: true},
