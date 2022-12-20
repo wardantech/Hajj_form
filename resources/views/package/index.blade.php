@@ -23,10 +23,7 @@
                     <nav class="breadcrumb-container" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="{{route('dashboard')}}"><i class="ik ik-home"></i></a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="{{route('package.create')}}">{{ __('Create package')}}</a>
+                                <a href="{{route('package.create')}}" class="btn btn-primary">{{ __('Create package')}}</a>
                             </li>
                         </ol>
                     </nav>

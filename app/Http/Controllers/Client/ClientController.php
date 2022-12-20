@@ -30,6 +30,10 @@ class ClientController extends Controller
 
             if (request()->ajax()) {
                 return DataTables::of($clients)
+                    ->addColumn('due', function ($clients){
+                        $due= $clients->bill - $clients->paid;
+                        return $due;
+                    })
                     ->addColumn('action', function ($clients){
                         $show_btn= '';
                         $edit_btn= '';
@@ -50,7 +54,7 @@ class ClientController extends Controller
 
                         return $show_btn.' '.$edit_btn.' '.$del_btn;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['due', 'action'])
                     ->make(true);
             }
             return view('client.index');
@@ -156,7 +160,7 @@ class ClientController extends Controller
             $data->package_id   = $request->package_id;
             $data->bill         = $request->bill;
             $data->paid         = $request->paid;
-            $data->due          = 0;//$request->due;
+
             $data->save();
 
             return redirect(route('client.index'))->with('success', 'Created successfully');
@@ -190,8 +194,9 @@ class ClientController extends Controller
     public function edit($id)
     {
         try {
+            $packages = Package::all();
             $client= Client::find($id);
-            return view('client.edit', compact('client'));
+            return view('client.edit', compact('client', 'packages'));
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', $exception->getMessage());
         }
@@ -206,7 +211,43 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'          => 'required|string',
+            'image'         => 'required',
+            'passport'      => 'required|string',
+            'phone'         => 'required|numeric|min:11||regex:/^([0-9\s\-\+\(\)]*)$/',
+            'service_type'  => 'required|numeric',
+            'package_id'    => 'numeric',
+            'bill'          => 'string',
+            'paid'          => 'required'
+        ]);
+
+        try {
+            if (request()->has('image')) {
+                $imageUploaded = request()->file('image');
+                $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
+                $imagePath = public_path('/upload/client/');
+                $imageUploaded->move($imagePath, $imageName);
+            } else {
+                $imageName = null;
+            }
+
+            $data = Client::find($id);
+            $data->name         = $request->name;
+            $data->image        = $imageName;
+            $data->passport     = $request->passport;
+            $data->phone        = $request->phone;
+            $data->service_type = $request->service_type;
+            $data->package_id   = $request->package_id;
+            $data->bill         = $request->bill;
+            $data->paid         = $request->paid;
+
+            $data->save();
+
+            return redirect(route('client.index'))->with('success', 'Updated successfully');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
 
     /**
