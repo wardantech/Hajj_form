@@ -92,9 +92,9 @@ class ClientController extends Controller
             'name'          => 'required|string',
             'passport'      => 'required|string',
             'phone'         => 'required|numeric|min:11||regex:/^([0-9\s\-\+\(\)]*)$/',
-            'service_type'  => 'required|numeric',
-            'package_id'    => 'numeric',
-            'bill'          => 'string',
+            'service_type'  => 'required',
+            'package_id'    => 'required',
+            'bill'          => 'required',
             'paid'          => 'required'
         ]);
 
@@ -182,9 +182,9 @@ class ClientController extends Controller
             'name'          => 'required|string',
             'passport'      => 'required|string',
             'phone'         => 'required|numeric|min:11||regex:/^([0-9\s\-\+\(\)]*)$/',
-            'service_type'  => 'required|numeric',
-            'package_id'    => 'numeric',
-            'bill'          => 'string',
+            'service_type'  => 'required',
+            'package_id'    => 'required',
+            'bill'          => 'required',
             'paid'          => 'required'
         ]);
 

@@ -43,7 +43,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="name">Name<span class="text-red">*</span></label>
-                                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Client Name" value="{{ old('name') }}" required>
+                                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Client Name" value="{{ old('name') }}">
                                         @error('name')
                                         <span class="text-red-error text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="phone">Phone<span class="text-red">*</span></label>
-                                        <input type="number" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="+880" value="{{ old('phone') }}" required>
+                                        <input type="number" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="+880" value="{{ old('phone') }}">
                                         @error('phone')
                                         <span class="text-red-error text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>
