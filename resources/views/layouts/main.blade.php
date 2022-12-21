@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" >
 <head>
-	<title>@yield('title','') | Radmin - Laravel Admin Starter</title>
+	<title>@yield('title','') | UNION TOURISM SERVICE</title>
 	<!-- initiate head with meta tags, css and script -->
 	@include('include.head')
 
@@ -28,11 +28,11 @@
 
     	</div>
     </div>
-    
+
 	<!-- initiate modal menu section-->
 	@include('include.modalmenu')
 
 	<!-- initiate scripts-->
-	@include('include.script')	
+	@include('include.script')
 </body>
 </html>

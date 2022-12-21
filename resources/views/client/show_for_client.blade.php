@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card p-3">
-                <button class="btn btn-info" id="print">Print</button>
+                <button class="btn btn-info" onclick="printDiv()" id="print">Print</button>
                 <div class="card-body" id="printTable">
                     <style>
                         .heding{
@@ -124,17 +124,20 @@
 </div>
 
 <script>
-    function printData()
+    function printDiv()
 {
-   var divToPrint=document.getElementById("printTable");
-   newWin= window.open("");
-   newWin.document.write(divToPrint.outerHTML);
-   newWin.print();
-   newWin.close();
-}
 
-$('#print').on('click',function(){
-printData();
-})
+  var divToPrint=document.getElementById('printTable');
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+  newWin.document.close();
+
+  setTimeout(function(){newWin.close();},10);
+
+}
 </script>
 @endsection

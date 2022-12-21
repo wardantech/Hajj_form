@@ -30,58 +30,76 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card p-3">
-                <button class="btn btn-info" id="print">Print</button>
+                <div class="d-flex printbtn">
+                    <button class="btn btn-info" onclick='printDiv()' id="print">Print</button>
+                <button class="btn btn-info" onclick='printDivWithPad()' id="printWithPad">Print with Pad</button>
+                </div>
                 <div class="card-body" id="printTable">
-                    <style>
-                        .heding{
-                            background: #5b9bd5 !important;
-                        }
-                        #print{
-                            text-align: center;
-                             margin: 0 auto;
-                        }
-                        .table-striped tbody tr:nth-of-type(odd) {
-                                            background-color: rgb(91 154 212 / 38%);
-                                        }
-                        @media print{
-                            .heding{
-                                background: #5b9bd5;
-                            }
-                            .uts{
-                                display: block
-                            }
-                            .table-striped tbody tr:nth-of-type(odd) {
-                                background-color: rgb(91 154 212 / 38%);
-                            }
-                            #print{
-                                display:none;
-                            }
-                        #data_table{
-                            width: 100% !important;
-                            border-collapse:collapse;
-                            text-align: left;
-                        }
-                        #data_table tr td{
-                           text-align: left;
-                           padding:10px;
-                        }
-                        #data_table tr th{
-                           text-align: left;
-                           padding:10px;
-                        }
-                        .text-center{
-                            text-align: center;
-                        }
-                        }
-
-                        </style>
                     <div class="logoimg text-center">
-                        <img src="{{ asset('img/show-page-header.png') }}" alt="" >
+                        <img id="head_logo" src="{{ asset('img/show-page-header.png') }}" alt="" >
                         <h3 style="display: none;" class="uts">Union Toursim Service</h3>
                     </div>
                     <br>
-                    <table style="width:100%" id="data_table" border="1"  class="table table-bordered table-striped data-table table-hover">
-                            <tr class="heding">
+                    <div id="pad">
+                        <style>
+                            .heding{
+                                background: #5b9bd5 !important;
+                            }
+                            .logoimg {
+                                height: 200px;
+                            }
+                            #print{
+                                text-align: center;
+                                width: 120px;
+                                margin-right: 10px;
+                            }
+                            .printbtn{
+                                text-align: center;
+                                margin: 0 auto;
+                            }
+                            #printWithPad{
+                                width: 120px;
+                            }
+                            .table-striped tbody tr:nth-of-type(odd) {
+                                                background-color: rgb(91 154 212 / 38%);
+                                            }
+
+
+                            @media print{
+                              .heding{
+                                    background: #5b9bd5;
+                                }
+                                .uts{
+                                    display: block
+                                }
+                                .table-striped tbody tr:nth-of-type(odd) {
+                                    background-color: rgb(91 154 212 / 38%);
+                                }
+                                #print{
+                                    display:none;
+                                }
+                            #data_table{
+                                width: 100% !important;
+                                border-collapse:collapse;
+                                text-align: left;
+                            }
+                            #data_table tr td{
+                               text-align: left;
+                               padding:10px;
+                            }
+                            #data_table tr th{
+                               text-align: left;
+                               padding:10px;
+                            }
+                            .text-center{
+                                text-align: center;
+                            }
+                            }
+
+                            </style>
+                            <p id="mt200"></p>
+                        <table style="width:100%" id="data_table" border="1"  class="table table-bordered table-striped data-table table-hover">
+                            <tr style="background:#5b9bd5; " class="heding">
                                 <th style="color:#fff;font-weight:bold">Personal Info</th>
                                 <th style="color:#fff;font-weight:bold">Data</th>
                               </tr>
@@ -129,24 +147,42 @@
                             </tr>
                         </thead>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
-    function printData()
+    function printDiv()
 {
-   var divToPrint=document.getElementById("printTable");
-   newWin= window.open("");
-   newWin.document.write(divToPrint.outerHTML);
-   newWin.print();
-   newWin.close();
-}
 
-$('#print').on('click',function(){
-printData();
-})
+  var divToPrint=document.getElementById('printTable');
+  var mt200 = document.getElementById('mt200').style.marginTop = "0px";
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+  newWin.document.close();
+
+  setTimeout(function(){newWin.close();},10);
+
+}
+function printDivWithPad()
+{
+  var divToPrint=document.getElementById('pad');
+ var mt200 = document.getElementById('mt200').style.marginTop = "200px";
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+  newWin.document.close();
+  setTimeout(function(){newWin.close();},10);
+
+}
 </script>
 @endsection
