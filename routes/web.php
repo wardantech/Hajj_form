@@ -168,12 +168,8 @@ Route::group(['middleware' => 'auth'], function(){
 Route::get('/register', function () { return view('pages.register'); });
 Route::get('/login-1', function () { return view('pages.login'); });
 
-// Route::group(['prefix' => 'client', 'as' => 'client.'], function(){
-//     Route::resource('/', ClientController::class);
-// });
-    Route::resource('client', ClientController::class);
+Route::resource('client', ClientController::class);
 
-    Route::post('client/login', [ClientAuthController::class, 'login'])->name('client.login');
-    // Route::post('client/search', [ClientController::class, 'search'])->name('client-search');
-    Route::get('package-amount', [ClientController::class,'PackageAmount'])->name('package-amount');
-    Route::get('show-for-client/{id}', [ClientController::class,'showForClient'])->name('show-for-client');
+Route::post('client/login', [ClientAuthController::class, 'login'])->name('client.login');
+Route::get('package-amount', [ClientController::class,'PackageAmount'])->name('package-amount');
+Route::get('show-for-client/{id}', [ClientController::class,'showForClient'])->name('show-for-client');

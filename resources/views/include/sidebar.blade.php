@@ -55,12 +55,6 @@
                 <div class="nav-item {{ ($route == 'package-index') ? 'active' : '' }}">
                     <a href="{{route('package.index')}}"><i class="ik ik-layout"></i><span>{{ __('Package')}}</span>  </a>
                 </div>
-                {{-- <div>
-                    <a href="{{route('client.index')}}">{{ __('Users List')}}</a>
-                </div>
-                <div>
-                    <a href="{{route('client.create')}}">{{ __('Add User')}}</a>
-                </div> --}}
                 <div class="nav-item {{ ($route == 'client.index' ||$route == 'client.create') ? 'active open' : '' }} has-sub">
                     <a href="#"><i class="ik ik-user"></i><span>{{ __('User Info')}}</span></a>
                     <div class="submenu-content">

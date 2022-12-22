@@ -32,38 +32,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div>
-            <form action="{{ route('client.index') }}" method="get" id="search-form">
-                @csrf
-                <div class="row ml-2">
-                    <input type="submit" class="btn btn-primary" name="search" value="Search">
-                    <div col-4>
-                       <div class="form-group">
-                            <label for=""></label>
-
-                       </div>
-                    </div>
-                    <div col-4>
-                        <div class="form-group">
-                            <label for="">phone No</label>
-                            <input type="text" name="phone" class="form-control">
-                        </div>
-                    </div>
-                    <div col-4 mr-2>
-                        <div class="form-group">
-                            <label for="">Passport No</label>
-                            <input type="text" name="passport" class="form-control">
-                        </div>
-                    </div>
-                    <div col-4 mr-2>
-                        <div class="form-group">
-                            <label for="">Name</label>
-                            <input type="text" name="name" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div> --}}
         <div class="row">
             <!-- start message area-->
             {{-- @include('alert.flash-message') --}}
