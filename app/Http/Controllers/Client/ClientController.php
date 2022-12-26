@@ -90,27 +90,35 @@ class ClientController extends Controller
     {
         $request->validate([
             'name'          => 'required|string',
+            'image'          => 'mimes:jpeg,jpg,png,gif|required|max:10000',
             'passport'      => 'required|string',
             'phone'         => 'required|numeric|min:11||regex:/^([0-9\s\-\+\(\)]*)$/',
             'service_type'  => 'required',
             'package_id'    => 'required',
-            'bill'          => 'required',
-            'paid'          => 'required'
+            'bill'          => 'required|numeric',
+            'paid'          => 'required|numeric'
         ]);
 
-        // try {
+        try {
+            // if (request()->has('image')) {
+            //     $imageUploaded = request()->file('image');
+            //     $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
+            //     $imagePath = public_path('/upload/client/');
+            //     $imageUploaded->move($imagePath, $imageName);
+            // } else {
+            //     $imageName = null;
+            // }
+
+            $data = new Client();
+            $data->name         = $request->name;
             if (request()->has('image')) {
                 $imageUploaded = request()->file('image');
                 $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
                 $imagePath = public_path('/upload/client/');
                 $imageUploaded->move($imagePath, $imageName);
-            } else {
-                $imageName = null;
-            }
+                $data->image        = $imageName;
 
-            $data = new Client();
-            $data->name         = $request->name;
-            $data->image        = $imageName;
+            }
             $data->passport     = $request->passport;
             $data->phone        = $request->phone;
             $data->service_type = $request->service_type;
@@ -121,9 +129,9 @@ class ClientController extends Controller
             $data->save();
 
             return redirect(route('client.index'))->with('success', 'Created successfully');
-        // } catch (\Exception $exception) {
-        //     return redirect()->back()->with('error', $exception->getMessage());
-        // }
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
 
     /**
@@ -180,27 +188,26 @@ class ClientController extends Controller
     {
         $request->validate([
             'name'          => 'required|string',
+            'image'         => 'mimes:jpeg,jpg,png,gif|max:10000',
             'passport'      => 'required|string',
             'phone'         => 'required|numeric|min:11||regex:/^([0-9\s\-\+\(\)]*)$/',
             'service_type'  => 'required',
             'package_id'    => 'required',
-            'bill'          => 'required',
-            'paid'          => 'required'
+            'bill'          => 'required|numeric',
+            'paid'          => 'required|numeric'
         ]);
 
         try {
-            if (request()->has('image')) {
+            $data = Client::find($id);
+            $data->name         = $request->name;
+             if (request()->has('image')) {
                 $imageUploaded = request()->file('image');
                 $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
                 $imagePath = public_path('/upload/client/');
                 $imageUploaded->move($imagePath, $imageName);
-            } else {
-                $imageName = null;
-            }
+                $data->image        = $imageName;
 
-            $data = Client::find($id);
-            $data->name         = $request->name;
-            $data->image        = $imageName;
+            }
             $data->passport     = $request->passport;
             $data->phone        = $request->phone;
             $data->service_type = $request->service_type;
@@ -222,9 +229,24 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        if ($request->ajax()){
+            try {
+                $client= Client::findOrFail($id);
+                // dd($client);
+                $client->delete();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Item Deleted Successfully.',
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
     }
 
     public function search(Request $request){

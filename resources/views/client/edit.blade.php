@@ -8,8 +8,7 @@
                     <div class="page-header-title">
                         <i class="ik ik-headphones bg-danger"></i>
                          <div class="d-inline">
-                            <h5>Add User</h5>
-                            {{--<span>CREATE A NEW Area</span>--}}
+                            <h5>Edit User</h5>
                         </div>
                     </div>
                 </div>
@@ -32,8 +31,8 @@
                                     <div class="form-group">
                                         <label for="client_category">Image</label>
                                         <input type="file" name="image" id="image"
-                                               class="form-control @error('image') is-invalid @enderror"
-                                               value="{{ old('image') }}" onchange="previewFile(this);" accept=".png, .jpg, .jpeg" >
+                                            class="form-control @error('image') is-invalid @enderror"
+                                            onchange="previewFile(this);" accept=".png, .jpg, .jpeg" >
                                         @error('image')
                                         <span class="text-red-error text-danger" role="alert">
                                                 <strong>{{ $message }}</strong>

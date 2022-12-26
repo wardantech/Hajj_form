@@ -7,7 +7,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PermissionController;
 
-use App\Http\Controllers\package\PackageController;
+use App\Http\Controllers\Package\PackageController;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Client\ClientController;
@@ -168,7 +168,8 @@ Route::group(['middleware' => 'auth'], function(){
 Route::get('/register', function () { return view('pages.register'); });
 Route::get('/login-1', function () { return view('pages.login'); });
 
-Route::resource('client', ClientController::class);
+Route::resource('client', ClientController::class)->except('destroy');
+Route::get('client/destroy/{id}', [ClientController::class,'destroy'])->name('client.destroy');
 
 Route::post('client/login', [ClientAuthController::class, 'login'])->name('client.login');
 Route::get('package-amount', [ClientController::class,'PackageAmount'])->name('package-amount');
