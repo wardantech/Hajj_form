@@ -31,6 +31,10 @@
                         .table-striped tbody tr:nth-of-type(odd) {
                                             background-color: rgb(91 154 212 / 38%);
                                         }
+                        .att_img{
+                            width: 65px;
+                             height: 65px;
+                        }
                         @media print{
                             .heding{
                                 background: #5b9bd5;
@@ -73,6 +77,10 @@
                                 <th style="color:#fff;font-weight:bold">Personal Info</th>
                                 <th style="color:#fff;font-weight:bold">Data</th>
                               </tr>
+                            <tr>
+                                <th>Attachment</th>
+                                <td><img class="att_img" src="{{asset('upload/client/'.$client->image)}}" alt=""></td>
+                            </tr>
                             <tr>
                                 <th>Date</th>
                                 <td>{{ Carbon\Carbon::parse($client->created_at)->format('d F, Y') ?? '--' }}</td>
