@@ -38,6 +38,7 @@
                     <div class="logoimg text-center">
                         <img id="head_logo" src="{{ asset('img/show-page-header.png') }}" alt="" >
                         <h3 style="display: none;" class="uts">Union Toursim Service</h3>
+                        <img class="att_img" src="{{asset('upload/client/'.$client->image)}}" alt="">
                     </div>
                     <br>
                     <div id="pad">
@@ -65,13 +66,23 @@
                                             }
 
                         .att_img{
-                                width: 65px;
-                                height: 65px;
+                            width: 200px;
+                            height: 200px;
+                            float: right;
+                            position: absolute;
+                            right: 0;
                             }
                             @media print{
                               .heding{
                                     background: #5b9bd5;
                                 }
+                                .att_img{
+                            width: 180px;
+                            height: 200px;
+                            float: right;
+                            position: absolute;
+                            right: 0;
+                            }
                                 .uts{
                                     display: block
                                 }
@@ -106,10 +117,6 @@
                                 <th style="color:#fff;font-weight:bold">Personal Info</th>
                                 <th style="color:#fff;font-weight:bold">Data</th>
                               </tr>
-                              <tr>
-                                <th>Attachment</th>
-                                <td><img class="att_img" src="{{asset('upload/client/'.$client->image)}}" alt=""></td>
-                            </tr>
                             <tr>
                                 <th>Date</th>
                                 <td>{{ Carbon\Carbon::parse($client->created_at)->format('d F, Y') ?? '--' }}</td>
