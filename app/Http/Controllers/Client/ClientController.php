@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Models\Package;
 use Illuminate\Http\Request;
 use App\Models\Client\Client;
-use App\Models\Package;
-use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
+use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class ClientController extends Controller
 {
@@ -100,21 +101,19 @@ class ClientController extends Controller
         ]);
 
         try {
-            // if (request()->has('image')) {
-            //     $imageUploaded = request()->file('image');
-            //     $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
-            //     $imagePath = public_path('/upload/client/');
-            //     $imageUploaded->move($imagePath, $imageName);
-            // } else {
-            //     $imageName = null;
-            // }
-
             $data = new Client();
             $data->name         = $request->name;
             if (request()->has('image')) {
                 $imageUploaded = request()->file('image');
-                $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
+                $imageName = time().'.'.$imageUploaded->getClientOriginalExtension();
+                $imgFile = Image::make($imageUploaded->getRealPath());
                 $imagePath = public_path('/upload/client/');
+                $imgFile->resize(192, 192, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($imagePath.'/'.$imageName);
+                // dd($imgFile);
+                $imagePath = public_path('/uploads');
+                // $imagePath = public_path('/upload/client/');
                 $imageUploaded->move($imagePath, $imageName);
                 $data->image        = $imageName;
 
@@ -200,10 +199,17 @@ class ClientController extends Controller
         try {
             $data = Client::find($id);
             $data->name         = $request->name;
-             if (request()->has('image')) {
+            if (request()->has('image')) {
                 $imageUploaded = request()->file('image');
-                $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
+                $imageName = time().'.'.$imageUploaded->getClientOriginalExtension();
+                $imgFile = Image::make($imageUploaded->getRealPath());
                 $imagePath = public_path('/upload/client/');
+                $imgFile->resize(192, 192, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($imagePath.'/'.$imageName);
+                // dd($imgFile);
+                $imagePath = public_path('/uploads');
+                // $imagePath = public_path('/upload/client/');
                 $imageUploaded->move($imagePath, $imageName);
                 $data->image        = $imageName;
 
