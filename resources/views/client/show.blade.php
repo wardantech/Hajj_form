@@ -66,8 +66,8 @@
                                             }
 
                         .att_img{
-                            width: 200px;
-                            height: 200px;
+                            width: 192px;
+                            height: 192px;
                             float: right;
                             position: absolute;
                             right: 0;
@@ -77,8 +77,8 @@
                                     background: #5b9bd5;
                                 }
                                 .att_img{
-                            width: 180px;
-                            height: 200px;
+                            width: 192px;
+                            height: 192px;
                             float: right;
                             position: absolute;
                             right: 0;
